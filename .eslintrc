@@ -1,0 +1,16 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "plugins": [
+    "prefer-object-spread"
+  ],
+  "rules": {
+    "semi": ["error", "never"],
+    "prefer-object-spread/prefer-object-spread": "error"
+  },
+}

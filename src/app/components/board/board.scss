@@ -1,0 +1,17 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 50px;
+  // transform: rotate(-1deg);
+
+  .gridList {
+    width: 270px;
+    min-width: 270px;
+    height: 250px;
+
+    .gridTile {
+      width: 50px;
+    }
+  }
+}
