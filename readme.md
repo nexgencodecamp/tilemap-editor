@@ -1,5 +1,12 @@
 # Tic-Tac-Toe
 
+Starter board and Redux-based approach for a 5x5 Tic-Tac-Toe game. Uses only functional stateless components to create a game board, and used negative space to present the game board tiles. Does not include computer player or implement the Minimax algorithm. This is just a spike to try out a new React boilerplate.
+
+Inspiration:
+- https://github.com/DimitriMikadze/express-react-redux-starter
+- https://github.com/jasonrobertfox/tictactoe/
+- https://github.com/andrewngu/sound-redux/
+
 ## Installation
 
 Clone Repo
