@@ -46,8 +46,8 @@ function Tile({
       }}
       rippleColor="#288feb"
       style={{
-        height: '50px',
-        minWidth: '50px',
+        height: '100px',
+        minWidth: '100px',
         margin: '2px',
       }}
     />

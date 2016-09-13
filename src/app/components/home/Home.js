@@ -25,7 +25,6 @@ function Home() {
   return (
     <MuiThemeProvider>
       <div className="container home">
-        <h1>5x5 Tic-Tac-Toe</h1>
         <Board />
         <Dialog
           title="What's your name, hoss?"
