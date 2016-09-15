@@ -1,43 +1,77 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import * as globals from '../../constants/GameRules'
 import Tile from '../tile/Tile'
+import Box from '../maptiles/Box';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import { connect } from 'react-redux'
 import { chooseMove } from '../../actions'
 
 import './board.scss'
 
-const tilesData = createTiles()
+let tilesData = null
 
-function createTiles () {
-  var tileData = []
-  for (var i = 0; i < globals.numRows; i++) {
-    for (var j = 0; j < globals.numCols; j++) {
-      var pos = {}
-      pos.col = j
-      pos.row = i
-      tileData.push(pos)
+@DragDropContext(HTML5Backend)
+class Board extends Component {
+
+  constructor (props) {
+    super (props)
+    this.state = { isTilesDataLoaded: false }
+  }
+
+  componentDidMount () {
+    /* Create the tiles here */
+    tilesData = this.createTiles()
+    if(tilesData){
+      this.setState({ isTilesDataLoaded: true })
     }
   }
-  return tileData
-}
 
-function Board ({onTileClick, boardData}) {
-  return (
-    <div className='grid'>
-      <div className='gridList'>
-        {tilesData.map((tile) => (
-                                   <Tile
-                                     key={[tile.col, tile.row]}
-                                     onClick={onTileClick}
-                                     owner={(() => {
-                                       return boardData[tile.row][tile.col] ? boardData[tile.row][tile.col] : null
-                                     })()}{...tile}
-                                   />
-                                 ))}
-      </div>
-    </div>
-  )
+  createTiles () {
+    var tileData = []
+    for (var i = 0; i < globals.numRows; i++) {
+      for (var j = 0; j < globals.numCols; j++) {
+        var pos = {}
+        pos.col = j
+        pos.row = i
+        tileData.push(pos)
+      }
+    }
+    return tileData
+  }
+
+  render () {
+    if(!tilesData){
+      return (
+        <div>I got nothing!</div>
+      )
+    }
+    else{
+      return (
+        <div>
+          <div>
+            <Box name="TileImage" />
+          </div>
+          <div className='grid'>
+            <div className='gridList'>
+              {tilesData.map((tile) => (
+                                         <Tile
+                                           key={[tile.col, tile.row]}
+                                           onClick={this.props.onTileClick}
+                                           owner={(() => {
+                                             return this.props.boardData[tile.row][tile.col] ? this.props.boardData[tile.row][tile.col] : null
+                                           })()}{...tile}
+                                         />
+                                       ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+
 }
 
 Board.propTypes = {

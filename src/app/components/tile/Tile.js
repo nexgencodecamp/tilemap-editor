@@ -41,10 +41,10 @@ function Tile({
       backgroundColor="#cee5fb"
       className="gridTile"
       icon={owner ? plotIcon(owner) : <EmptyIcon />}
-      onTouchTap={() => {
-        onClick('player', { row, col })
-      }}
-      rippleColor="#288feb"
+      // onTouchTap={() => {
+      //   onClick('player', { row, col })
+      // }}
+      // rippleColor="#288feb"
       style={{
         height: '100px',
         minWidth: '100px',
