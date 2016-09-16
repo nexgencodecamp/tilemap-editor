@@ -4,6 +4,8 @@ import { DropTarget } from 'react-dnd';
 import FlatButton from 'material-ui/FlatButton'
 import SvgIcon from 'material-ui/SvgIcon'
 
+import './tile.scss'
+
 /* eslint-disable max-len */
 const CircleIcon = (props) => (
   <SvgIcon {...props}>
@@ -69,7 +71,7 @@ class Tile extends Component {
       }
 
       return connectDropTarget(
-        <div>
+        <div className="button-wrapper">
           <FlatButton
             backgroundColor="#cee5fb"
             className="gridTile"
