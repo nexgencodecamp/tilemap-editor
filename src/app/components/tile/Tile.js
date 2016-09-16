@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
+import ItemTypes from '../../constants/ItemTypes';
+import { DropTarget } from 'react-dnd';
 import FlatButton from 'material-ui/FlatButton'
 import SvgIcon from 'material-ui/SvgIcon'
 
@@ -22,36 +24,69 @@ const EmptyIcon = (props) => (
     <path d="M0 0h24v24H0z" fill="none" />
   </SvgIcon>
 )
+
+const boxTarget = {
+  drop() {
+    return { name: 'Tile' };
+  }
+};
+
+@DropTarget(ItemTypes.BOX, boxTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop()
+}))
 /* eslint-enable max-len */
 
-function plotIcon(owner) {
-  return owner === 'player'
-    ? <CircleIcon />
-    : <CloseIcon />
-}
+class Tile extends Component {
+    static propTypes = {
+      connectDropTarget: PropTypes.func.isRequired,
+      isOver: PropTypes.bool.isRequired,
+      canDrop: PropTypes.bool.isRequired
+    };
 
-function Tile({
-  onClick,
-  owner,
-  col,
-  row,
-}) {
-  return (
-    <FlatButton
-      backgroundColor="#cee5fb"
-      className="gridTile"
-      icon={owner ? plotIcon(owner) : <EmptyIcon />}
-      // onTouchTap={() => {
-      //   onClick('player', { row, col })
-      // }}
-      // rippleColor="#288feb"
-      style={{
-        height: '100px',
-        minWidth: '100px',
-        margin: '2px',
-      }}
-    />
-  )
+    constructor (props) {
+      super(props)
+
+      this.state = {}
+    }
+
+    plotIcon (owner) {
+      return owner === 'player'
+        ? <CircleIcon />
+        : <CloseIcon />
+    }
+
+    render () {
+      const { canDrop, isOver, connectDropTarget } = this.props;
+      const isActive = canDrop && isOver;
+
+      let backgroundColor = '#222';
+      if (isActive) {
+        backgroundColor = 'darkgreen';
+      } else if (canDrop) {
+        backgroundColor = 'darkkhaki';
+      }
+
+      return connectDropTarget(
+        <div>
+          <FlatButton
+            backgroundColor="#cee5fb"
+            className="gridTile"
+            icon={this.props.owner ? plotIcon(this.props.owner) : <EmptyIcon />}
+            // onTouchTap={() => {
+            //   onClick('player', { row, col })
+            // }}
+            // rippleColor="#288feb"
+            style={{
+              height: '100px',
+              minWidth: '100px',
+              margin: '2px',
+            }}
+          />
+        </div>
+      )
+    }
 }
 
 Tile.propTypes = {
